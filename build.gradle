@@ -1,0 +1,50 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+apply plugin: 'org.openjfx.javafxplugin'
+
+group = 'tk.sheazywi'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        url = 'https://jitpack.io/'
+        name = 'JitPack'
+    }
+}
+
+dependencies {
+    implementation 'de.jensd:fontawsomefx-fontawesome:4.7.0-9.1.2'
+
+    implementation 'fr.flowarg:flowupdater:1.3.+'
+    implementation 'fr.flowarg:openlauncherlib:3.+'
+}
+
+javafx {
+    version = 12
+    modules = ['javafx.controls']
+}
+
+application {
+    mainClassName = 'com.github.sheazywi.launcher.Main'
+}
+
+compileJava {
+    options.encoding = "UTF-8"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.github.sheazywi.launcher.Main'
+    }
+    from {
+        configurations.compileClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}
